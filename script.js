@@ -24,7 +24,7 @@ var brickPadding = 10;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
 
-var brick = [];
+var bricks = [];
 for (var c = 0; c < brickColumnCount; c += 1) {
     bricks[c] = [];
     for (var r = 0; r < brickRowCount; r += 1) {
