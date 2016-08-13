@@ -38,6 +38,8 @@ function randomColor() {
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // ****** Ball ******
     drawBall();
 
     if (x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
@@ -52,6 +54,15 @@ function draw() {
     
     x += dx;
     y += dy;
+
+    // ****** Paddle ******
+    drawPaddle();
+
+    if (rightPressed && paddleX < canvas.width-paddleWidth) {
+        paddleX += 7;
+    } else if (leftPressed && paddleX > 0) {
+        paddleX -= 7; 
+    }
 }
 
 function keyDownHandler(e) {
