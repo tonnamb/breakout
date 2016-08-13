@@ -162,6 +162,10 @@ function draw() {
 
     // ****** Lives ******
     drawLives();
+
+    // ****** Calls itself for improved rendering ******
+    // Gives control back to the browser
+    requestAnimationFrame(draw);
 }
 
 function keyDownHandler(e) {
@@ -191,4 +195,4 @@ document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("mousemove", mouseMoveHandler, false);
 
-setInterval(draw, 10); // call draw() every 10 milliseconds forever
+draw();
