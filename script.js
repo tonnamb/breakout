@@ -50,9 +50,15 @@ function draw() {
     if (y + dy < ballRadius) {
         dy = -dy;
         ballColor = randomColor();
-    } else if (y + dy > canvas.height-ballRadius) {
-        alert("GAME OVER");
-        document.location.reload();
+    } else if (y + dy > canvas.height-ballRadius-paddleHeight) {
+        if (x > paddleX && x < paddleX + paddleWidth) {
+            // Increasing ball speed
+            dy = -1.2*dy;
+            dx = 1.2*dx;
+        } else {
+            alert("GAME OVER");
+            document.location.reload();
+        }
     }
     
     x += dx;
