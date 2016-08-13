@@ -28,7 +28,7 @@ var bricks = [];
 for (var c = 0; c < brickColumnCount; c += 1) {
     bricks[c] = [];
     for (var r = 0; r < brickRowCount; r += 1) {
-        bricks[c][r] = { x: 0, y: 0 };
+        bricks[c][r] = { x: 0, y: 0, status: 1 };
     }
 }
 
@@ -55,15 +55,34 @@ function randomColor() {
 function drawBricks() {
     for (var c = 0; c < brickColumnCount; c += 1) {
         for (var r = 0; r < brickRowCount; r += 1) {
-            var brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
-            var brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
-            bricks[c][r].x = brickX;
-            bricks[c][r].y = brickY;
-            ctx.beginPath();
-            ctx.rect(brickX, brickY, brickWidth, brickHeight);
-            ctx.fillStyle = "#0095DD";
-            ctx.fill();
-            ctx.closePath();
+            if (bricks[c][r].status === 1) {
+                var brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
+                var brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
+                bricks[c][r].x = brickX;
+                bricks[c][r].y = brickY;
+                ctx.beginPath();
+                ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                ctx.fillStyle = "#0095DD";
+                ctx.fill();
+                ctx.closePath();
+            }
+        }
+    }
+}
+
+function collisionDetection() {
+    for (var c = 0; c < brickColumnCount; c += 1) {
+        for (var r = 0; r < brickRowCount; r += 1) {
+            var b = bricks[c][r];
+            if (b.status === 1) {
+                if (x > b.x &&
+                x < b.x + brickWidth &&
+                y > b.y &&
+                y < b.y + brickHeight) {
+                    dy = -dy;
+                    b.status = 0;
+                }
+            }
         }
     }
 }
@@ -84,9 +103,10 @@ function draw() {
         ballColor = randomColor();
     } else if (y + dy > canvas.height-ballRadius-paddleHeight) {
         if (x > paddleX && x < paddleX + paddleWidth) {
+            dy = -dy;
             // Increasing ball speed
-            dy = -1.2*dy;
-            dx = 1.2*dx;
+            // dy = -1.2*dy;
+            // dx = 1.2*dx;
         } else {
             alert("GAME OVER");
             document.location.reload();
@@ -106,6 +126,7 @@ function draw() {
     }
 
     // ****** Bricks ******
+    collisionDetection();
     drawBricks();
 }
 
