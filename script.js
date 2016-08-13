@@ -16,7 +16,7 @@ var paddleX = (canvas.width-paddleWidth)/2;
 var rightPressed = false;
 var leftPressed = false;
 
-var brickRowCount = 3;
+var brickRowCount = 1;
 var brickColumnCount = 5;
 var brickWidth = 75;
 var brickHeight = 20;
@@ -91,6 +91,10 @@ function collisionDetection() {
                     b.status = 0;
                     score += 1;
                     ballColor = randomColor();
+                    if (score === brickRowCount*brickColumnCount) {
+                        alert("YOU WIN, CONGRATULATIONS!");
+                        document.location.reload();
+                    }
                 }
             }
         }
@@ -157,7 +161,15 @@ function keyUpHandler(e) {
     }
 }
 
+function mouseMoveHandler(e) {
+    var relativeX = e.clientX - canvas.offsetLeft;
+    if (relativeX > 0 && relativeX < canvas.width) {
+        paddleX = relativeX - paddleWidth/2;
+    }
+}
+
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+document.addEventListener("mousemove", mouseMoveHandler, false);
 
 setInterval(draw, 10); // call draw() every 10 milliseconds forever
