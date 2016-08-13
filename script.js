@@ -47,9 +47,12 @@ function draw() {
         ballColor = randomColor();
     }
 
-    if (y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
+    if (y + dy < ballRadius) {
         dy = -dy;
         ballColor = randomColor();
+    } else if (y + dy > canvas.height-ballRadius) {
+        alert("GAME OVER");
+        document.location.reload();
     }
     
     x += dx;
