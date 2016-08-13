@@ -81,6 +81,7 @@ function collisionDetection() {
                 y < b.y + brickHeight) {
                     dy = -dy;
                     b.status = 0;
+                    ballColor = randomColor();
                 }
             }
         }
@@ -95,12 +96,10 @@ function draw() {
 
     if (x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
         dx = -dx;
-        ballColor = randomColor();
     }
 
     if (y + dy < ballRadius) {
         dy = -dy;
-        ballColor = randomColor();
     } else if (y + dy > canvas.height-ballRadius-paddleHeight) {
         if (x > paddleX && x < paddleX + paddleWidth) {
             dy = -dy;
